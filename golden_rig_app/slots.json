@@ -1,0 +1,8 @@
+{
+  "slots": [
+    {"slot_number": 1, "port": "COM6", "usb_serial": null},
+    {"slot_number": 2, "port": "COM5", "usb_serial": null},
+    {"slot_number": 3, "port": "COM4", "usb_serial": null},
+    {"slot_number": 4, "port": "COM3", "usb_serial": null}
+  ]
+}
