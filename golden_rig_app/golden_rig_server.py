@@ -208,12 +208,15 @@ async def run(args):
     service_info=None
     try:
         if args.mdns:
-            from zeroconf import InterfaceChoice, Zeroconf
+            # Must use the asyncio API: the blocking Zeroconf.register_service() called from
+            # inside the running event loop deadlocks it, so no TLS connection is ever served.
+            from zeroconf import InterfaceChoice
+            from zeroconf.asyncio import AsyncZeroconf
 
             name=mdns_hostname(args.rig_id,args.mdns_name)
-            zeroconf=Zeroconf(interfaces=InterfaceChoice.All)
+            zeroconf=AsyncZeroconf(interfaces=InterfaceChoice.All)
             service_info=mdns_service_info(name,args.rig_id,args.port)
-            zeroconf.register_service(service_info)
+            await zeroconf.async_register_service(service_info)
             LOG.info('mDNS advertised as %s.local (%s:%s)',name,args.host,args.port)
         async with listener:
             await listener.serve_forever()
@@ -222,8 +225,8 @@ async def run(args):
         await listener.wait_closed()
         if zeroconf is not None:
             if service_info is not None:
-                zeroconf.unregister_service(service_info)
-            zeroconf.close()
+                await zeroconf.async_unregister_service(service_info)
+            await zeroconf.async_close()
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser()

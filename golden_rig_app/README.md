@@ -15,6 +15,10 @@ python golden_rig_server.py --backend serial-at --slots-config slots.json --rig-
 
 Certificate CN must match `--rig-id`. Use the CA and SAN certificate procedure in `StationApp/docs/golden_rig_application.md`. Configure and approve the same rig certificate on each station. Do not reuse the legacy unsecured port 1111 wire protocol. The reference server can also run `--backend bleak` if intentionally selected.
 
+## Windows installer
+
+`installer\build.ps1 -Version 1.0.0` runs the tests and bundles `GoldenRigServer.exe` + `rig_certtool.exe` with PyInstaller, so the rig needs no Python. It then compiles `installer\Output\GoldenRigSetup-1.0.0.exe` with Inno Setup 6 (`winget install --id JRSoftware.InnoSetup -e`). The setup wizard sets the rig ID, mDNS hostname and port, optionally renames the PC to match the mDNS name, imports certificates or generates a key and CSR, and adds firewall rules and Start-menu shortcuts. Configuration lives in `%ProgramData%\GoldenRig\rig_config.json`. Operator guide, including certificate, key and fingerprint creation: [installer/docs/INSTALL.md](installer/docs/INSTALL.md).
+
 ## Stable LAN name (mDNS)
 
 The rig can publish a stable `.local` hostname using multicast DNS, so stations on the same multicast-enabled LAN can connect without tracking its changing IP address. Install dependencies with `pip install -r requirements.txt`, then enable mDNS with `--mdns`:

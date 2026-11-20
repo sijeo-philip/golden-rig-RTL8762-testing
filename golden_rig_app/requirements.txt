@@ -2,3 +2,4 @@ pyserial>=3.5,<4.0
 bleak>=0.22,<1.0  # optional for --backend bleak
 ifaddr>=0.1.7,<1.0
 zeroconf>=0.132,<1.0
+cryptography>=42,<47  # rig_certtool + launcher certificate checks

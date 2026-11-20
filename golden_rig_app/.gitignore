@@ -1,3 +1,8 @@
 .venv
 __pycache__
 .pytest_cache 
+installer/build/
+installer/Output/
+# Never commit private keys
+*.key
+*.csr

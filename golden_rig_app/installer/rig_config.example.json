@@ -1,0 +1,17 @@
+{
+  "rig_id": "GOLDEN-RIG-01",
+  "host": "0.0.0.0",
+  "port": 8762,
+  "backend": "serial-at",
+  "slots_config": "slots.json",
+  "cert": "certs/rig.pem",
+  "key": "certs/rig.key",
+  "ca_cert": "certs/golden_rig_ca.pem",
+  "mdns": {
+    "enabled": true,
+    "name": "golden-rig-01"
+  },
+  "parallel": 3,
+  "log_dir": "logs",
+  "log_retention_days": 90
+}
